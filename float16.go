@@ -11,29 +11,16 @@
 
 */
 
-package float16
+// Package half is a IEEE 754 binary16 half precision format.
+package half
 
-import (
-	"math"
-)
+import "math"
 
+// An Float16 represents a 16-bit floating point number.
 type Float16 uint16
 
-func ToFloat32(f16 Float16) float32 {
-	sign := uint32((f16 >> 15) & 0x1)
-	exp := (f16 >> 10) & 0x1f
-	exp32 := uint32(exp) + 127 - 15
-	if exp == 0 {
-		exp32 = 0
-	} else if exp == 0x1f {
-		exp32 = 0xff
-	}
-	frac := uint32(f16 & 0x3ff)
-	i := (sign << 31) | (exp32 << 23) | (frac << 13)
-	return math.Float32frombits(i)
-}
-
-func FromFloat32(f float32) Float16 {
+// NewFloat16 allocates and returns a new Float16 set to f.
+func NewFloat16(f float32) Float16 {
 	i := math.Float32bits(f)
 	sign := uint16((i >> 31) & 0x1)
 	exp := (i >> 23) & 0xff
@@ -54,4 +41,19 @@ func FromFloat32(f float32) Float16 {
 	}
 	f16 := (sign << 15) | uint16(exp16<<10) | frac
 	return Float16(f16)
+}
+
+// Float32 returns the float32 representation of f.
+func (f Float16) Float32() float32 {
+	sign := uint32((f >> 15) & 0x1)
+	exp := (f >> 10) & 0x1f
+	exp32 := uint32(exp) + 127 - 15
+	if exp == 0 {
+		exp32 = 0
+	} else if exp == 0x1f {
+		exp32 = 0xff
+	}
+	frac := uint32(f & 0x3ff)
+	i := (sign << 31) | (exp32 << 23) | (frac << 13)
+	return math.Float32frombits(i)
 }

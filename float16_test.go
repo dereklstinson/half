@@ -11,7 +11,7 @@
 
 */
 
-package float16
+package half
 
 import (
 	"math"
@@ -36,18 +36,18 @@ func getFloatTable() map[Float16]float32 {
 	return table
 }
 
-func TestToFloat32(t *testing.T) {
+func TestFloat32(t *testing.T) {
 	for k, v := range getFloatTable() {
-		f := ToFloat32(k)
+		f := k.Float32()
 		if f != v {
 			t.Errorf("ToFloat32(%d) = %f, want %f.", k, f, v)
 		}
 	}
 }
 
-func TestFromFloat32(t *testing.T) {
+func TestNewFloat16(t *testing.T) {
 	for k, v := range getFloatTable() {
-		i := FromFloat32(v)
+		i := NewFloat16(v)
 		if i != k {
 			t.Errorf("FromFloat32(%f) = %d, want %d.", v, i, k)
 		}
