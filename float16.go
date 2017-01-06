@@ -11,12 +11,12 @@
 
 */
 
-// Package half is a IEEE 754 binary16 half precision format.
+// Package half is an IEEE 754 binary16 half precision format.
 package half
 
 import "math"
 
-// An Float16 represents a 16-bit floating point number.
+// A Float16 represents a 16-bit floating point number.
 type Float16 uint16
 
 // NewFloat16 allocates and returns a new Float16 set to f.
