@@ -24,7 +24,7 @@ type Float16 uint16
 
 //String satisfies the fmt Stringer interface
 func (f Float16) String() string {
-	return strconv.FormatFloat(float64(f.Float32()), 'e', 4, 32)
+	return strconv.FormatFloat(float64(f.Float32()), 'f', -1, 32)
 }
 
 // NewFloat16 allocates and returns a new Float16 set to f.
