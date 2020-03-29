@@ -15,6 +15,7 @@
 package half
 
 import (
+	"errors"
 	"math"
 	"strconv"
 )
@@ -99,6 +100,17 @@ func (f Float16) Float32() float32 {
 		exp32 = 0xff
 	}
 	return math.Float32frombits((sign << 31) | (exp32 << 23) | ((uint32)(f&0x3ff) << 13))
+}
+
+//FillFloat32Slice will fill dest with converted src Float16 to float32 values.  if len(dest)!=len(src) an error will be returned
+func FillFloat32Slice(dest []float32, src []Float16) (err error) {
+	if len(dest) != len(src) {
+		return errors.New("FillFloat32Slice(dest []float32,src []float16) len(dest)!=len(src) ")
+	}
+	for i := range dest {
+		dest[i] = src[i].Float32()
+	}
+	return nil
 }
 
 //ToFloat32 takes an []Float16 and returns a []float32
